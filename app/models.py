@@ -106,15 +106,15 @@ class Conversations(Base):
         )
 
 	def step_1(self):
-		status = twitter.respond_to_tweet(max_step.tweet_id, conversation_tree[1])
+		status = twitter.respond_to_tweet(self.tweet_id, conversation_tree[1])
 		to_insert = [{
 			"tweet_id":root_id,
 			"sent_tweet_id":status.id_str,
 			"in_reply_to_id":status.in_reply_to_status_id,
-			"tweeter_id":max_step.tweeter_id,
-			"conversation_status":(max_step.conversation_status+1),
-			"tweet_text":max_step.tweet_text,
-			"checks_made":(max_step.checks_made+1),
+			"tweeter_id":self.tweeter_id,
+			"conversation_status":(self.conversation_status+1),
+			"tweet_text":self.tweet_text,
+			"checks_made":(self.checks_made+1),
 			"reachout_template":conversation_tree[1],
 			"form":0
 		}]
