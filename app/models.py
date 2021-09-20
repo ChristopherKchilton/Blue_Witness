@@ -84,7 +84,8 @@ class Conversations(Base):
     parent = relationship("ForceRanks", back_populates="children")
 
     def __repr__(self):
-        return "id:{}, tweet_id:{}, form:{}, root_tweet_city:{}, root_tweet_state:{}, root_tweet_lat:{}, root_tweet_long:{}, root_tweet_date:{}, root_tweet_force_rank:{}, sent_tweet_id:{}, received_tweet_id:{}, in_reply_to_id:{}, tweeter_id:{}, conversation_state:{}, tweet_text:{}, checks_made:{}, reachout_template:{}, isChecked:{}".format(
+        return(
+            "id:{}, tweet_id:{}, form:{}, root_tweet_city:{}, root_tweet_state:{}, root_tweet_lat:{}, root_tweet_long:{}, root_tweet_date:{}, root_tweet_force_rank:{}, sent_tweet_id:{}, received_tweet_id:{}, in_reply_to_id:{}, tweeter_id:{}, conversation_state:{}, tweet_text:{}, checks_made:{}, reachout_template:{}, isChecked:{}").format(
             self.id,
             self.tweet_id,
             self.form,
@@ -105,21 +106,6 @@ class Conversations(Base):
             self.isChecked
         )
 
-	def step_1(self):
-		status = twitter.respond_to_tweet(self.tweet_id, conversation_tree[1])
-		to_insert = [{
-			"tweet_id":root_id,
-			"sent_tweet_id":status.id_str,
-			"in_reply_to_id":status.in_reply_to_status_id,
-			"tweeter_id":self.tweeter_id,
-			"conversation_status":(self.conversation_status+1),
-			"tweet_text":self.tweet_text,
-			"checks_made":(self.checks_made+1),
-			"reachout_template":conversation_tree[1],
-			"form":0
-		}]
-
-		DB.insert_data_conversations(to_insert)
 
 class Training(Base):
 
